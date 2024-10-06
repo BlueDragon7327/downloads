@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloads - DragonDownloader</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a1a, #333);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            animation: fadeIn 1.5s ease-in-out;
+            overflow: hidden;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-shadow: 0 0 15px rgba(0, 0, 255, 0.7);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            padding: 15px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 25px;
+            width: 300px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-bar:focus {
+            box-shadow: 0 0 25px rgba(0, 123, 255, 0.7);
+        }
+
+        .downloads-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .download-item {
+            margin: 15px;
+        }
+
+        .download-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: #fff;
+            width: 150px;
+            height: 150px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0, 123, 255, 0.5);
+        }
+
+        .download-button img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+
+        .download-button span {
+            font-weight: bold;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .download-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 35px rgba(0, 123, 255, 0.8);
+        }
+
+        .download-button:hover img {
+            transform: scale(1.1);
+        }
+    </style>
+    <script>
+        const downloads = [
+            { name: "Raven XD", url: "https://cdn.discordapp.com/attachments/1292450402733654080/1292450437387259955/raven-XD.jar?ex=6703c7c4&is=67027644&hm=e7f7fea279628e3a790e808d75fdf1d597d97e88025b3d80150e5f1d193a36ca&", img: "images/ravenxd.png" },
+            { name: "Adobe Air", url: "https://cdn.discordapp.com/attachments/1292451116407328881/1292451144492384287/AdobeAIR.exe?ex=6703c86d&is=670276ed&hm=5919ed4cc424b04186ec540ca917dcc423fdbb07d1c345f7b5c67345d111c1c1&", img: "images/adobeair.png" },
+            { name: "PenguinAI", url: "https://cdn.discordapp.com/attachments/1292451939186901094/1292452466461376633/PenguinAI-1.0.0-py3-none-any.whl?ex=6703c9a8&is=67027828&hm=4956242543e1a7b25c43a634ec2853e66c2e03fbf5fbd3fcabef05c3767971c6&", img: "images/penguinai.png" },
+        ];
+
+        function searchDownloads() {
+            const query = document.getElementById("search").value.toLowerCase();
+            const filteredDownloads = downloads.filter(item => item.name.toLowerCase().includes(query));
+            displayDownloads(filteredDownloads);
+        }
+
+        function displayDownloads(downloadList) {
+            const listElement = document.getElementById("downloads");
+            listElement.innerHTML = "";
+            downloadList.forEach(item => {
+                const listItem = document.createElement("li");
+                listItem.className = "download-item";
+                const button = document.createElement("a");
+                button.className = "download-button";
+                button.href = item.url;
+                button.target = "_blank"; // Open in new tab
+                const img = document.createElement("img");
+                img.src = item.img;
+                img.alt = item.name;
+                const text = document.createElement("span");
+                text.textContent = item.name;
+
+                button.appendChild(img);
+                button.appendChild(text);
+                listItem.appendChild(button);
+                listElement.appendChild(listItem);
+            });
+        }
+
+        window.onload = () => {
+            displayDownloads(downloads);
+        };
+    </script>
+</head>
+<body>
+    <h1>Downloads</h1>
+    <div class="search-container">
+        <input type="text" id="search" class="search-bar" placeholder="Search downloads..." oninput="searchDownloads()">
+    </div>
+    <ul id="downloads" class="downloads-list"></ul>
+</body>
+</html>
